@@ -7,12 +7,30 @@ if (!isset($_SESSION['username'])) {
 }
 $id_user = $_SESSION['user_id'];
 $d = mysqli_fetch_array($um->detail_user($id_user));
+if (isset($_SESSION['update_profile_success'])) {
+?>
+	<div class="alert alert-success alert-dismissible" role="alert">
+		<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		<strong>Success!</strong> <?php echo $_SESSION['update_profile_success'] ?>.
+	</div>
+<?php
+unset($_SESSION['update_profile_success']);
+}
+if (isset($_SESSION['update_profile_error'])) {
+?>
+	<div class="alert alert-danger alert-dismissible" role="alert">
+		<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		<strong>Warning!</strong> <?php echo $_SESSION['update_profile_error'] ?>.
+	</div>
+<?php
+unset($_SESSION['update_profile_error']);
+}
 ?>
 <!DOCTYPE html>
 <html>
 <head>
 	<?php include_once 'front_end_source.php'; ?>
-	<title>Jurnal 8</title>
+	<title>TA 10</title>
 </head>
 <body>
 <?php include_once 'navbar.php'; ?>
@@ -22,9 +40,6 @@ $d = mysqli_fetch_array($um->detail_user($id_user));
 			<?php include_once 'side_nav.php'; ?>
 		</div>
 		<div class="col-md-9">
-			<?php
-
-			?>
 		    <div class="panel panel-default">
 				<div class="panel-heading">
 					<h3 class="panel-title">Profil</h3>

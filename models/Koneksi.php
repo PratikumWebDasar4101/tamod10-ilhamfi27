@@ -9,7 +9,7 @@ class Koneksi{
 		$this->host 	= "localhost";
 		$this->username = "root";
 		$this->password = "";
-		$this->db 		= "ta_webdas-9";
+		$this->db 		= "ta_webdas-10";
 	}
 
 	public function db_connect(){

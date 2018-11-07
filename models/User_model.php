@@ -43,7 +43,7 @@ class User_model{
                   `foto`,
                   `email`
                 FROM
-                  `ta_webdas-9`.`user`
+                  `user`
                   ";
         $result = mysqli_query($this->conn,$query) or die (mysqli_error($this->conn));
         return $result;

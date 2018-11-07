@@ -1,7 +1,7 @@
 <?php
+session_start();
 require_once '../models/User_model.php';
 $um = new User_model();
-session_start();
 if(isset($_GET['proses'])){
     switch ($_GET['proses']) {
         case 'registrasi':
@@ -43,24 +43,42 @@ if(isset($_GET['proses'])){
             $konfirmasi_password = isset($_POST['konfirmasi_password']) ? $_POST['konfirmasi_password'] : "";
             $password_lama = isset($_POST['password_lama']) ? $_POST['password_lama'] : "";
 
-            $result = null;
-            if($password != "" && $password == $konfirmasi_password){
-                $d = mysqli_fetch_array($um->detail_user($id));
-                if ($d['password'] == md5($password_lama)) {
-                    $result = $um->update_profile_user($username,$nama_depan,$nama_belakang,$jenis_kelamin,$tanggal_lahir,$email,md5($password),$id);
+            $error = false;
+
+            if($password != ""){
+                if ($password == $konfirmasi_password) {
+                    $d = mysqli_fetch_array($um->detail_user($id));
+                    if ($d['password'] != md5($password_lama)) {
+                        $_SESSION['update_profile_error'] = "Password Lama Salah!";
+                        $error = true;
+                    }
+                } else {
+                    $_SESSION['update_profile_error'] = "Konfirmasi Password Salah!";
+                    $error = true;
                 }
+                if (!$error) {
+                    $result = $um->update_profile_user($username,$nama_depan,$nama_belakang,$jenis_kelamin,$tanggal_lahir,$email,md5($password),$id);
+                    if ($result) {
+                        $_SESSION['update_profile_success'] = "Ubah Profile Sukses!";
+                        header('location: ../profile.php');
+                    } else {
+                        $_SESSION['update_profile_error'] = "Error Ubah Profile!";
+                        header('location: ../profile.php');
+                    }
+                } 
             } else{
                 $result = $um->update_profile_user($username,$nama_depan,$nama_belakang,$jenis_kelamin,$tanggal_lahir,$email,null,$id);
+                echo $result;
+                if ($result) {
+                    $_SESSION['update_profile_success'] = "Ubah Profile Sukses!";
+                    header('location: ../profile.php');
+                } else {
+                    $_SESSION['update_profile_error'] = "Error Ubah Profile!";
+                    header('location: ../profile.php');
+                }
             }
-            if ($result) {
-                header('location: ../profile.php');
-            } else {
-                header('location: ../profile.php');
-            }
-
             break;
         default:
-            // code...
             break;
     }
 }

@@ -10,7 +10,7 @@ if (!isset($_SESSION['username'])) {
 <html>
 <head>
 	<?php include_once 'front_end_source.php'; ?>
-	<title>Jurnal 8</title>
+	<title>TA 10</title>
 </head>
 <body>
 <?php include_once 'navbar.php'; ?>
@@ -31,7 +31,7 @@ if (!isset($_SESSION['username'])) {
 							</span>
 						</div><!-- /input-group -->
 					</form>
-				</div><!-- /.col-lg-6 -->
+				</div>
 			</div>
 			<div class="table-responsive">
 				<table class="table table-hover">
@@ -51,6 +51,7 @@ if (!isset($_SESSION['username'])) {
 					<tbody>
 						<?php
 						$n = 1;
+						$nim = null;
 						isset($_GET['nim']) ? $nim = $_GET['nim'] : null;
 						foreach ($mm->list_mahasiswa($nim) as $d) {
 						?>
@@ -63,7 +64,10 @@ if (!isset($_SESSION['username'])) {
 								<td><?php echo $d['hobby']; ?></td>
 								<td><?php echo $d['wisata_favorit']; ?></td>
 								<td><?php echo $d['genre_film_favorit']; ?></td>
-								<td><a href="edit.php?id=<?php echo $d['id']; ?>">Edit</a> | <a href="proses/proses_data_mahasiswa.php?proses=hapus&id=<?php echo $d['id']; ?>" onclick="return confirm('Apakah anda yakin akan menghapus data ini?');">Hapus</a></td>
+								<td>
+									<a href="edit.php?id=<?php echo $d['id']; ?>"><button class="btn btn-primary">Edit</button></a>
+									<a href="proses/proses_data_mahasiswa.php?proses=hapus&id=<?php echo $d['id']; ?>" onclick="return confirm('Apakah anda yakin akan menghapus data ini?');"><button class="btn btn-danger">Hapus</button></a>
+								</td>
 							</tr>
 							<?php
 							$n++;

@@ -2,7 +2,7 @@
 <html>
 <head>
 	<?php include_once 'front_end_source.php'; ?>
-	<title>Jurnal 8</title>
+	<title>TA 10</title>
 </head>
 <body>
 <div class="container">
